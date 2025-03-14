@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DONT_TOUCH.Scripts.Editors;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,9 +14,6 @@ public class PrimitiveComponent : SchematicBlock
 
     [Tooltip("Whether the primitive should be visible in game.")]
     public bool Visible = true;
-
-    [Tooltip("Snaps the object rotation to real in-game rotation.")]
-    public bool SnapRotation;
 
     public override BlockType BlockType => BlockType.Primitive;
 
@@ -67,9 +63,6 @@ public class PrimitiveComponent : SchematicBlock
         _renderer.sharedMaterial.color = Color;
         
         _renderer.enabled = Visible;
-        
-        if (SnapRotation)
-            transform.localRotation = PrimitiveEditor.GetRealRotation(this);
     }
 
     private void OnDrawGizmos()
