@@ -6,6 +6,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PrimitiveComponent : SchematicBlock
 {
+    [ColorUsage(true, true)]
     [Tooltip("The color of the primitive. Supports transparent colors.")]
     public Color Color;
 
@@ -33,12 +34,23 @@ public class PrimitiveComponent : SchematicBlock
         block.Properties = new Dictionary<string, object>
         {
             { "PrimitiveType", (PrimitiveType)Enum.Parse(typeof(PrimitiveType), tag) },
-            { "Color", ColorUtility.ToHtmlStringRGBA(Color) },
+            { "Color", ColorString },
             { "PrimitiveFlags", primitiveFlags },
             { "Static", gameObject.isStatic }
         };
 
         return true;
+    }
+
+    private string ColorString
+    {
+        get
+        {
+            if (Color.r <= 1 && Color.g <= 1 && Color.b <= 1)
+                return ColorUtility.ToHtmlStringRGBA(Color);
+
+            return string.Format("{0}:{1}:{2}:{3}", Color.r * 255f, Color.g * 255f, Color.b * 255f, Color.a);
+        }
     }
 
     private void Start()
@@ -61,7 +73,7 @@ public class PrimitiveComponent : SchematicBlock
 
         _renderer.sharedMaterial = Color.a >= 1f ? _sharedRegular : _sharedTransparent;
         _renderer.sharedMaterial.color = Color;
-        
+
         _renderer.enabled = Visible;
     }
 
@@ -69,7 +81,7 @@ public class PrimitiveComponent : SchematicBlock
     {
         if (Visible)
             return;
-        
+
         Gizmos.color = new Color(Color.r, Color.g, Color.b, 1f);
         Gizmos.DrawWireMesh(_filter.sharedMesh, 0, transform.position, transform.rotation, transform.localScale);
     }
