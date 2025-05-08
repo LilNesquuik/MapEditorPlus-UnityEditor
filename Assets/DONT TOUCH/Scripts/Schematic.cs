@@ -91,10 +91,9 @@ public class Schematic : SchematicBlock
                 }
                 else // Empty transform
                 {
-                    obj.localScale = Vector3.one;
-
                     block.BlockType = BlockType.Empty;
                     block.Rotation = obj.localEulerAngles;
+                    block.Scale = obj.localScale;
                 }
             }
 
