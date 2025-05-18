@@ -10,9 +10,6 @@ public class WorkstationComponent : SchematicBlock
 
     public override bool Compile(SchematicBlockData block, Schematic schematic)
     {
-        block.Rotation = transform.localEulerAngles;
-        block.Scale = transform.localScale;
-
         block.BlockType = BlockType.Workstation;
         block.Properties = new Dictionary<string, object>
         {

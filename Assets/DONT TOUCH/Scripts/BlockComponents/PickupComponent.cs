@@ -28,9 +28,6 @@ public class PickupComponent : SchematicBlock
 
     public override bool Compile(SchematicBlockData block, Schematic _)
     {
-        block.Rotation = transform.localEulerAngles;
-        block.Scale = transform.localScale;
-
         block.BlockType = BlockType.Pickup;
         block.Properties = new Dictionary<string, object>
         {

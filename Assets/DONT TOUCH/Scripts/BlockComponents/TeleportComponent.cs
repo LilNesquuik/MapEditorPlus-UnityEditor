@@ -105,9 +105,6 @@ public class TeleportComponent : SchematicBlock
     {
         if (!ValidateList(TargetTeleporters))
             throw new Exception($"The teleport list for the {name} is invalid! ({name})");
-        
-        block.Rotation = transform.localEulerAngles;
-        block.Scale = transform.localScale;
 
         SerializableTeleport serializableTeleport = new SerializableTeleport(block)
         {

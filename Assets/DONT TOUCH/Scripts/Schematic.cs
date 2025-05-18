@@ -60,7 +60,10 @@ public class Schematic : SchematicBlock
                 Name = obj.name,
                 ObjectId = objectId,
                 ParentId = obj.parent.GetInstanceID(),
-                Position = Quaternion.Euler(obj.parent.eulerAngles) * obj.localPosition,
+
+                Position = obj.localPosition,
+                Rotation = obj.localEulerAngles,
+                Scale = obj.localScale
             };
 
             if (obj.TryGetComponent(out SchematicBlock schematicBlock))
@@ -74,7 +77,7 @@ public class Schematic : SchematicBlock
                 if (obj.TryGetComponent(out Light lightComponent))
                 {
                     block.BlockType = BlockType.Light;
-                    block.Rotation = obj.localEulerAngles;
+                    block.Scale = null;
                     block.Properties = new Dictionary<string, object>
                     {
                         { "LightType", lightComponent.type },
@@ -92,8 +95,6 @@ public class Schematic : SchematicBlock
                 else // Empty transform
                 {
                     block.BlockType = BlockType.Empty;
-                    block.Rotation = obj.localEulerAngles;
-                    block.Scale = obj.localScale;
                 }
             }
 
