@@ -11,4 +11,9 @@
     Text = 8,
     Interactable = 9,
     Waypoint = 10,
+    Capybara = 11,
+    LczDoor = 12,
+    HczDoor = 13,
+    EzDoor = 14,
+    HeavyBulkDoor = 15
 }
