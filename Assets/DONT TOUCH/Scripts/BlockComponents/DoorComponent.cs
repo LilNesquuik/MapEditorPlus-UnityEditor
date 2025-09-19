@@ -57,7 +57,8 @@ public class DoorComponent : SchematicBlock
         base.Decompile(ref gameObject, block, parent);
     }
     
-    public DoorType _prevDoorType = DoorType.Lcz;
+    
+    private DoorType _prevDoorType = DoorType.Lcz;
 
     private void Update()
     {
