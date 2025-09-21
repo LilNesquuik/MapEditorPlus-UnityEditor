@@ -26,9 +26,19 @@ public class TextComponent : SchematicBlock
 
 	public override void Compile(SchematicBlockData block)
 	{
+		string text = _textMesh.text;
+		
+		if (_textMesh.fontStyle.HasFlag(FontStyle.Bold))
+			text = $"<b>{text}</b>";
+		if (_textMesh.fontStyle.HasFlag(FontStyle.Italic))
+			text = $"<i>{text}</i>";
+		
+		if (_textMesh.color != Color.white)
+			text = $"<color=#{ColorUtility.ToHtmlStringRGB(_textMesh.color)}>{text}</color>";
+		
 		block.Properties = new Dictionary<string, object>
 		{
-			{ "Text", _textMesh.text },
+			{ "Text", text },
 			{ "DisplaySize", (SerializableVector)_textMesh.rectTransform.sizeDelta }
 		};
 
