@@ -65,27 +65,30 @@ public class DoorComponent : SchematicBlock
         if (_prevDoorType == DoorType)
             return;
         
-        GetByDoorType(_prevDoorType).SetActive(false);
+        GetByDoorType.SetActive(false);
         
         _prevDoorType = DoorType;
         
-        GetByDoorType(DoorType).SetActive(true);
+        GetByDoorType.SetActive(true);
     }
 
-    public GameObject GetByDoorType(DoorType doorType)
+    public GameObject GetByDoorType
     {
-        switch (doorType)
+        get
         {
-            case DoorType.Lcz:
-                return transform.Find("Lcz").gameObject;
-            case DoorType.Hcz:
-                return transform.Find("Hcz").gameObject;
-            case DoorType.Ez:
-                return transform.Find("Ez").gameObject;
-            case DoorType.HeavyBulkDoor:
-                return transform.Find("HeavyBulkDoor").gameObject;
-            default:
-                return transform.Find("Lcz").gameObject;
+            switch (_prevDoorType)
+            {
+                case DoorType.Lcz:
+                    return transform.Find("Lcz").gameObject;
+                case DoorType.Hcz:
+                    return transform.Find("Hcz").gameObject;
+                case DoorType.Ez:
+                    return transform.Find("Ez").gameObject;
+                case DoorType.HeavyBulkDoor:
+                    return transform.Find("HeavyBulkDoor").gameObject;
+                default:
+                    return transform.Find("Lcz").gameObject;
+            }   
         }
     }
 }

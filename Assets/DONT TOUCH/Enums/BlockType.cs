@@ -15,5 +15,6 @@
     LczDoor = 12,
     HczDoor = 13,
     EzDoor = 14,
-    HeavyBulkDoor = 15
+    HeavyBulkDoor = 15,
+    Clutter = 16,
 }

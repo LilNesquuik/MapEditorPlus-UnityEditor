@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public abstract class SchematicBlock : MonoBehaviour
 {
     public abstract BlockType BlockType { get; }
