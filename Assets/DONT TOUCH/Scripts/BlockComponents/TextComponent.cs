@@ -5,54 +5,61 @@ using TMPro;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class TextComponent : SchematicBlock
+public class TextComponent : SchematicBlock, IAdminToy
 {
-	public override BlockType BlockType => BlockType.Text;
+    public override BlockType BlockType => BlockType.Text;
 
-	private TMP_Text _textMesh;
-	private MeshRenderer _renderer;
+    private TMP_Text _textMesh;
+    private MeshRenderer _renderer;
 
-	private void Awake()
-	{
-		TryGetComponent(out _textMesh);
-		TryGetComponent(out _renderer);
-	}
+    private void Awake()
+    {
+        TryGetComponent(out _textMesh);
+        TryGetComponent(out _renderer);
+    }
 
-	private void Update()
-	{
-		_textMesh.margin = Vector4.zero;
-		_renderer.hideFlags = HideFlags.HideInInspector;
-	}
+    private void Update()
+    {
+        _textMesh.margin = Vector4.zero;
+        _renderer.hideFlags = HideFlags.HideInInspector;
+    }
 
-	public override void Compile(SchematicBlockData block)
-	{
-		string text = _textMesh.text;
-		
-		if (_textMesh.fontStyle.HasFlag(FontStyle.Bold))
-			text = $"<b>{text}</b>";
-		if (_textMesh.fontStyle.HasFlag(FontStyle.Italic))
-			text = $"<i>{text}</i>";
-		
-		if (_textMesh.color != Color.white)
-			text = $"<color=#{ColorUtility.ToHtmlStringRGB(_textMesh.color)}>{text}</color>";
-		
-		block.Properties = new Dictionary<string, object>
-		{
-			{ "Text", text },
-			{ "DisplaySize", (SerializableVector)_textMesh.rectTransform.sizeDelta }
-		};
 
-		base.Compile(block);
-	}
+    public override void Compile(SchematicBlockData block)
+    {
+        string text = _textMesh.text;
+        FontStyles fontStyle = _textMesh.fontStyle;
+        Color color = _textMesh.color;
+	
+        text = fontStyle.HasFlag(FontStyles.Bold) ? $"<b>{text}</b>" : text;
+        text = fontStyle.HasFlag(FontStyles.Italic) ? $"<i>{text}</i>" : text;
+        text = fontStyle.HasFlag(FontStyles.Strikethrough) ? $"<s>{text}</s>" : text;
+        text = fontStyle.HasFlag(FontStyles.Underline) ? $"<u>{text}</u>" : text;
+        text = fontStyle.HasFlag(FontStyles.UpperCase) ? $"<uppercase>{text}</uppercase>" : text;
+        text = fontStyle.HasFlag(FontStyles.LowerCase) ? $"<lowercase>{text}</lowercase>" : text;
+        text = fontStyle.HasFlag(FontStyles.SmallCaps) ? $"<smallcaps>{text}</smallcaps>" : text;
+        text = fontStyle.HasFlag(FontStyles.Superscript) ? $"<sup>{text}</sup>" : text;
+        text = fontStyle.HasFlag(FontStyles.Subscript) ? $"<sub>{text}</sub>" : text;
+        text = fontStyle.HasFlag(FontStyles.Highlight) ? $"<highlight>{text}</highlight>" : text;
+        text = color != Color.white ? $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{text}</color>" : text;
+	
+        block.Properties = new Dictionary<string, object>
+        {
+            { "Text", text },
+            { "DisplaySize", (SerializableVector)_textMesh.rectTransform.sizeDelta }
+        };
 
-	public override void Decompile(ref GameObject gameObject, SchematicBlockData block, Transform parent)
-	{
-		TMP_Text text = Create<GameObject>("Assets/Resources/Blocks/Text.prefab").GetComponent<TMP_Text>();
-		gameObject = text.gameObject;
+        base.Compile(block);
+    }
 
-		text.text = Convert.ToString(block.Properties["Text"]);
-		text.rectTransform.sizeDelta = JsonConvert.DeserializeObject<Vector2>(block.Properties["DisplaySize"].ToString());
+    public override void Decompile(ref GameObject gameObject, SchematicBlockData block, Transform parent)
+    {
+        TMP_Text text = Create<GameObject>("Assets/Resources/Blocks/Text.prefab").GetComponent<TMP_Text>();
+        gameObject = text.gameObject;
 
-		base.Decompile(ref gameObject, block, parent);
-	}
+        text.text = Convert.ToString(block.Properties["Text"]);
+        text.rectTransform.sizeDelta = JsonConvert.DeserializeObject<Vector2>(block.Properties["DisplaySize"].ToString());
+
+        base.Decompile(ref gameObject, block, parent);
+    }
 }

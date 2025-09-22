@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PrimitiveComponent : SchematicBlock
+public class PrimitiveComponent : SchematicBlock, IAdminToy
 {
     [ColorUsage(true, true)]
     [Tooltip("The color of the primitive. Supports transparent colors.")]

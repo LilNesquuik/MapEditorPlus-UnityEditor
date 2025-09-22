@@ -12,8 +12,8 @@
             DrawDefaultInspector();
             Schematic schematic = (Schematic)target;
 
-            GUILayout.Label($"<color=white>Number of blocks: <b>{schematic.GetComponentsInChildren<SchematicBlock>().Length - 1}</b></color>", SchematicManager.UnityRichTextStyle);
-
+            GUILayout.Label($"<color=white>Number of <b>adminToys</b>: <b>{schematic.GetComponentsInChildren<IAdminToy>().Length}</b></color>", SchematicManager.UnityRichTextStyle);
+            
             if (GUILayout.Button("Apply Rotation to Empty Objects"))
             {
                 int i = ApplyTransformProperty(schematic, true, false);

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class WaypointComponent : SchematicBlock
+public class WaypointComponent : SchematicBlock, IAdminToy
 {
 	public override BlockType BlockType => BlockType.Waypoint;
 

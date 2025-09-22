@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class CapybaraComponent : SchematicBlock
+public class CapybaraComponent : SchematicBlock, IAdminToy
 {
     [Tooltip("Whether the capybara should have a collider.")]
     public bool Collider = true;
@@ -29,5 +29,11 @@ public class CapybaraComponent : SchematicBlock
 
 		base.Decompile(ref gameObject, block, parent);
 	}
+
+    public void Start()
+    {
+        foreach (Transform child in transform)
+            child.gameObject.hideFlags = HideFlags.HideInHierarchy;
+    }
 }
 

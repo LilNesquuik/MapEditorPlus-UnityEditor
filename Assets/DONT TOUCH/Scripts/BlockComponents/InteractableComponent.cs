@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class InteractableComponent : SchematicBlock
+public class InteractableComponent : SchematicBlock, IAdminToy
 {
 	public ColliderShape Shape;
 
