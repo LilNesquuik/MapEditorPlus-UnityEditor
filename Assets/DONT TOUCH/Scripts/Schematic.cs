@@ -20,6 +20,7 @@ public class Schematic : SchematicBlock
         BlockList.RootObjectId = rootObjectId;
         BlockList.Blocks.Clear();
         RigidbodyDictionary.Clear();
+        WheelColliderDictionary.Clear();
         Teleports.Clear();
 
         if (TryGetComponent(out Rigidbody rigidbody))
