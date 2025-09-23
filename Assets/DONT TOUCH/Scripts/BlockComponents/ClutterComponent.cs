@@ -24,6 +24,8 @@ public class ClutterComponent : SchematicBlock
     {
         ClutterComponent clutterComponent = Create<ClutterComponent>("Assets/Resources/Blocks/Clutter.prefab");
         gameObject = clutterComponent.gameObject;
+        
+        clutterComponent.connectorType = (SpawnableRoomConnectorType)Convert.ToInt32(block.Properties["ConnectorType"]);
 
         base.Decompile(ref gameObject, block, parent);
     }
