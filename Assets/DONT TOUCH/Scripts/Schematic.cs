@@ -8,9 +8,14 @@ using UnityEngine;
 #pragma warning disable CS0618
 
 [ExecuteInEditMode]
+[ExecuteAlways]
 public class Schematic : SchematicBlock
 {
     public override BlockType BlockType => BlockType.Schematic;
+    
+    [Tooltip("Using the Culling system.")]
+    public Vector3 cullingPosition;
+    public Vector3 cullingSize = Vector3.one;
 
     public void CompileSchematic()
     {
@@ -18,6 +23,8 @@ public class Schematic : SchematicBlock
 
         int rootObjectId = transform.GetInstanceID();
         BlockList.RootObjectId = rootObjectId;
+        BlockList.CullingPosition = cullingPosition;
+        BlockList.CullingSize = cullingSize;
         BlockList.Blocks.Clear();
         RigidbodyDictionary.Clear();
         WheelColliderDictionary.Clear();
@@ -114,6 +121,13 @@ public class Schematic : SchematicBlock
         };
 
         // return false;
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(cullingPosition, cullingSize);
     }
 
     private void SetupOutput(out string schematicDirectoryPath)

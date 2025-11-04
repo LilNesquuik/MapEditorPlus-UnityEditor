@@ -28,11 +28,7 @@ public static class Decompiler
             Dict.Add(BlockType.Interactable, gameObject.AddComponent<InteractableComponent>());
             Dict.Add(BlockType.Waypoint, gameObject.AddComponent<WaypointComponent>());
             Dict.Add(BlockType.Capybara, gameObject.AddComponent<CapybaraComponent>());
-            Dict.Add(BlockType.LczDoor, gameObject.AddComponent<DoorComponent>());
-            Dict.Add(BlockType.HczDoor, gameObject.AddComponent<DoorComponent>());
-            Dict.Add(BlockType.EzDoor, gameObject.AddComponent<DoorComponent>());
-            Dict.Add(BlockType.HeavyBulkDoor, gameObject.AddComponent<DoorComponent>());
-            Dict.Add(BlockType.Clutter, gameObject.AddComponent<ClutterComponent>());
+            Dict.Add(BlockType.Trigger, gameObject.AddComponent<TriggerComponent>());
 
             return this;
 		}
@@ -47,7 +43,7 @@ public static class Decompiler
         if (!Directory.Exists(importPath))
             Directory.CreateDirectory(importPath);
 
-        string jsonFilePath = EditorUtility.OpenFilePanelWithFilters("Select json with the schemaitc", importPath, new string[] { "Schematic", "json" });
+        string jsonFilePath = EditorUtility.OpenFilePanelWithFilters("Select json with the schemaitc", importPath, new[] { "Schematic", "json" });
         if (string.IsNullOrEmpty(jsonFilePath))
         {
             Debug.LogError("Invalid schematic file. Path is empty.");
