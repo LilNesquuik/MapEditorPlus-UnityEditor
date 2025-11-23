@@ -42,7 +42,7 @@ public abstract class SchematicBlock : MonoBehaviour
         }
         else
         {
-            block.Properties = new Dictionary<string, object>()
+            block.Properties = new Dictionary<string, object>
             {
                 { "Static", gameObject.isStatic }
             };

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4580532796589635614}
-  - component: {fileID: 4580532796589635613}
+  - component: {fileID: 2503828607338528309}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4580532796589635613
+--- !u!114 &2503828607338528309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4580532796589635612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2196641d2faf492e8b58ec3a87c5b46f, type: 3}
+  m_Script: {fileID: 11500000, guid: ab3b03ab2b74205458e4ca75edf66014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   triggerType: 0

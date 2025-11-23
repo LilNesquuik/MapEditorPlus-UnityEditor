@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-[ExecuteAlways]
+[ExecuteInEditMode]
 public class TriggerComponent : SchematicBlock
 {
 	public override BlockType BlockType => BlockType.Trigger;
