@@ -13,4 +13,5 @@
     Waypoint = 10,
     Capybara = 11,
     Trigger = 12,
+    Speaker = 13,
 }
