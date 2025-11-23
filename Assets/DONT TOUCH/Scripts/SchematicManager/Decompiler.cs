@@ -27,6 +27,8 @@ public static class Decompiler
             Dict.Add(BlockType.Text, gameObject.AddComponent<TextComponent>());
             Dict.Add(BlockType.Interactable, gameObject.AddComponent<InteractableComponent>());
             Dict.Add(BlockType.Waypoint, gameObject.AddComponent<WaypointComponent>());
+            Dict.Add(BlockType.Capybara, gameObject.AddComponent<CapybaraComponent>());
+            Dict.Add(BlockType.Trigger, gameObject.AddComponent<TriggerComponent>());
 
             return this;
 		}
