@@ -1,5 +1,6 @@
 ﻿public enum BlockType
 {
+    Link = -1,
     Empty = 0,
     Primitive = 1,
     Light = 2,
@@ -8,4 +9,10 @@
     Schematic = 5,
     Teleport = 6,
     Locker = 7,
+    Text = 8,
+    Interactable = 9,
+    Waypoint = 10,
+    Capybara = 11,
+    Trigger = 12,
+    Speaker = 13,
 }
