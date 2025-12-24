@@ -1,5 +1,6 @@
 ﻿public enum BlockType
 {
+    Link = -1,
     Empty = 0,
     Primitive = 1,
     Light = 2,

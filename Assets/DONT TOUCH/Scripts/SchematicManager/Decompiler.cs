@@ -17,6 +17,7 @@ public static class Decompiler
 
         public SchematicBuilder Init()
         {
+            Dict.Add(BlockType.Link, gameObject.AddComponent<LinkComponent>());
             Dict.Add(BlockType.Empty, gameObject.AddComponent<EmptyComponent>());
             Dict.Add(BlockType.Primitive, gameObject.AddComponent<PrimitiveComponent>());
             Dict.Add(BlockType.Light, gameObject.AddComponent<LightComponent>());
