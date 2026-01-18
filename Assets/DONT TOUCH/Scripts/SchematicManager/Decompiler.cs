@@ -104,6 +104,8 @@ public static class Decompiler
         {
             // CreateTeleporters();
             AddRigidbodies();
+            AddWheelColliders();
+            AddScripts();
         }
 
         Debug.Log($"<color=#00FF00>Successfully imported <b>{_schematicName}</b> schematic in {stopwatch.ElapsedMilliseconds} ms!</color>");
@@ -237,6 +239,45 @@ public static class Decompiler
             rigidbody.useGravity = dict.Value.UseGravity;
             rigidbody.constraints = dict.Value.Constraints;
             rigidbody.mass = dict.Value.Mass;
+        }
+    }
+    
+    private static void AddWheelColliders()
+    {
+        string wheelColliderPath = Path.Combine(_schematicDirectoryPath, $"{_schematicName}-WheelColliders.json");
+        if (!File.Exists(wheelColliderPath))
+            return;
+
+        foreach (KeyValuePair<int, SerializableWheelCollider> dict in JsonConvert.DeserializeObject<Dictionary<int, SerializableWheelCollider>>(File.ReadAllText(wheelColliderPath)))
+        {
+            if (!_objectFromId[dict.Key].gameObject.TryGetComponent(out WheelCollider wheelCollider))
+                wheelCollider = _objectFromId[dict.Key].gameObject.AddComponent<WheelCollider>();
+            
+            wheelCollider.mass = dict.Value.Mass;
+            wheelCollider.radius = dict.Value.Radius;
+            wheelCollider.wheelDampingRate = dict.Value.DampingRate;
+            wheelCollider.forceAppPointDistance = dict.Value.ForceApplicationPoint;
+            wheelCollider.center = dict.Value.Center;
+            wheelCollider.suspensionSpring = dict.Value.SuspensionSpring;
+            wheelCollider.forwardFriction = dict.Value.ForwardFrictionSpring;
+            wheelCollider.sidewaysFriction = dict.Value.SideFrictionSpring;
+        }
+    }
+
+    private static void AddScripts()
+    {
+        string externalScriptPath = Path.Combine(_schematicDirectoryPath, _schematicName+"-ExternalScript.json");
+        if (!File.Exists(externalScriptPath))
+            return;
+
+        foreach (KeyValuePair<int, SerializableScript> dict in JsonConvert.DeserializeObject<Dictionary<int, SerializableScript>>(File.ReadAllText(externalScriptPath)))
+        {
+            if (!_objectFromId[dict.Key].gameObject.TryGetComponent(out ScriptComponent script))
+                script = _objectFromId[dict.Key].gameObject.AddComponent<ScriptComponent>();
+            
+            script.ScriptId = dict.Value.ScriptId;
+            foreach (KeyValuePair<string, string> property in dict.Value.Properties)
+                script.properties.Add(new ScriptProperty { Key = property.Key, Value = property.Value });
         }
     }
 

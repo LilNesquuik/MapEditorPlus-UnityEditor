@@ -20,10 +20,15 @@ public class Schematic : SchematicBlock
         BlockList.RootObjectId = rootObjectId;
         BlockList.Blocks.Clear();
         RigidbodyDictionary.Clear();
+        WheelColliderDictionary.Clear();
+        ScriptDictionary.Clear();
         Teleports.Clear();
 
         if (TryGetComponent(out Rigidbody rigidbody))
             RigidbodyDictionary.Add(rootObjectId, new SerializableRigidbody(rigidbody));
+        
+        if (TryGetComponent(out ScriptComponent scriptComponent))
+            ScriptDictionary.Add(rootObjectId, new SerializableScript(scriptComponent));
 
         foreach (SchematicBlock block in GetComponentsInChildren<SchematicBlock>())
         {
@@ -46,6 +51,12 @@ public class Schematic : SchematicBlock
 
             if (block.TryGetComponent(out rigidbody))
                 RigidbodyDictionary.Add(block.transform.GetInstanceID(), new SerializableRigidbody(rigidbody));
+            
+            if (block.TryGetComponent(out WheelCollider wheelCollider))
+                WheelColliderDictionary.Add(block.transform.GetInstanceID(), new SerializableWheelCollider(wheelCollider));
+            
+            if (block.TryGetComponent(out scriptComponent))
+                ScriptDictionary.Add(block.transform.GetInstanceID(), new SerializableScript(scriptComponent));
 
             BlockList.Blocks.Add(data);
         }
@@ -62,6 +73,16 @@ public class Schematic : SchematicBlock
         if (Teleports.Count > 0)
             File.WriteAllText(Path.Combine(schematicDirectoryPath, $"{name}-Teleports.json"),
                 JsonConvert.SerializeObject(Teleports, Formatting.Indented,
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        
+        if (WheelColliderDictionary.Count > 0)
+            File.WriteAllText(Path.Combine(schematicDirectoryPath, $"{name}-WheelColliders.json"),
+                JsonConvert.SerializeObject(WheelColliderDictionary, Formatting.Indented,
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        
+        if (ScriptDictionary.Count > 0)
+            File.WriteAllText(Path.Combine(schematicDirectoryPath, $"{name}-ExternalScript.json"),
+                JsonConvert.SerializeObject(ScriptDictionary, Formatting.Indented,
                     new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 
         if (Config.ZipCompiledSchematics)
@@ -140,9 +161,11 @@ public class Schematic : SchematicBlock
         Directory.Delete(path, false);
     }
 
-    internal readonly SchematicObjectDataList BlockList = new SchematicObjectDataList();
-    internal readonly Dictionary<int, SerializableRigidbody> RigidbodyDictionary = new Dictionary<int, SerializableRigidbody>();
-    internal readonly List<SerializableTeleport> Teleports = new List<SerializableTeleport>();
+    internal readonly SchematicObjectDataList BlockList = new();
+    internal readonly Dictionary<int, SerializableRigidbody> RigidbodyDictionary = new();
+    internal readonly Dictionary<int, SerializableWheelCollider> WheelColliderDictionary = new();
+    internal readonly Dictionary<int, SerializableScript> ScriptDictionary = new();
+    internal readonly List<SerializableTeleport> Teleports = new();
 
     private static BuildAssetBundleOptions AssetBundleBuildOptions => BuildAssetBundleOptions.ChunkBasedCompression |
                                                                       BuildAssetBundleOptions.ForceRebuildAssetBundle |

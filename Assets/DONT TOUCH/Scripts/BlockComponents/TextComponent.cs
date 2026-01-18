@@ -26,9 +26,25 @@ public class TextComponent : SchematicBlock
 
 	public override void Compile(SchematicBlockData block)
 	{
+		string text = _textMesh.text;
+		FontStyles fontStyle = _textMesh.fontStyle;
+		Color color = _textMesh.color;
+	
+		text = fontStyle.HasFlag(FontStyles.Bold) ? $"<b>{text}</b>" : text;
+		text = fontStyle.HasFlag(FontStyles.Italic) ? $"<i>{text}</i>" : text;
+		text = fontStyle.HasFlag(FontStyles.Strikethrough) ? $"<s>{text}</s>" : text;
+		text = fontStyle.HasFlag(FontStyles.Underline) ? $"<u>{text}</u>" : text;
+		text = fontStyle.HasFlag(FontStyles.UpperCase) ? $"<uppercase>{text}</uppercase>" : text;
+		text = fontStyle.HasFlag(FontStyles.LowerCase) ? $"<lowercase>{text}</lowercase>" : text;
+		text = fontStyle.HasFlag(FontStyles.SmallCaps) ? $"<smallcaps>{text}</smallcaps>" : text;
+		text = fontStyle.HasFlag(FontStyles.Superscript) ? $"<sup>{text}</sup>" : text;
+		text = fontStyle.HasFlag(FontStyles.Subscript) ? $"<sub>{text}</sub>" : text;
+		text = fontStyle.HasFlag(FontStyles.Highlight) ? $"<highlight>{text}</highlight>" : text;
+		text = color != Color.white ? $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{text}</color>" : text;
+		
 		block.Properties = new Dictionary<string, object>
 		{
-			{ "Text", _textMesh.text },
+			{ "Text", text },
 			{ "DisplaySize", (SerializableVector)_textMesh.rectTransform.sizeDelta }
 		};
 
