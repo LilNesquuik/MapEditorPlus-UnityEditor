@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ScriptComponent : MonoBehaviour
 {
-    [Tooltip("The id of the script.")]
-    public int ScriptId;
+    [Tooltip("The name of the script.")]
+    public string ScriptName;
     
     [Tooltip("The properties of the script.")]
     [SerializeField]
