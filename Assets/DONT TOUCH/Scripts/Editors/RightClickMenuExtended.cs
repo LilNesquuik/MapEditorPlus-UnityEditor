@@ -76,6 +76,9 @@ public class RightClickMenuExtended
 
 	[MenuItem("GameObject/🛠️ MER Blocks/Waypoint", false, -1)]
 	private static void CreateWaypoint(MenuCommand menuCommand) => CreateBlock(menuCommand, "Assets/Resources/Blocks/Waypoint.prefab");
+	
+	[MenuItem("GameObject/🛠️ MER Blocks/Trigger", false, -1)]
+	private static void CreateTrigger(MenuCommand menuCommand) => CreateBlock(menuCommand, "Assets/Resources/Blocks/Trigger.prefab");
 
 	private static void CreateBlock(MenuCommand menuCommand, string prefabPath)
 	{
