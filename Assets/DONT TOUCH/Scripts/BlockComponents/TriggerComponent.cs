@@ -40,9 +40,9 @@ public class TriggerComponent : SchematicBlock
 
 	private void OnDrawGizmos()
 	{
-		Gizmos.color = Color.red;
+		Gizmos.color = new Color(1, 0, 1, 0.2f);
 		Gizmos.matrix = transform.localToWorldMatrix;
-		Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+		Gizmos.DrawCube(Vector3.zero, Vector3.one);
 	}
 
 	public override void Decompile(ref GameObject gameObject, SchematicBlockData block, Transform parent)

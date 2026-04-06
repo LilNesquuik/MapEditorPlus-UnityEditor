@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
@@ -53,12 +54,42 @@ public class TextComponent : SchematicBlock
 
 	public override void Decompile(ref GameObject gameObject, SchematicBlockData block, Transform parent)
 	{
-		TMP_Text text = Create<GameObject>("Assets/Resources/Blocks/Text.prefab").GetComponent<TMP_Text>();
-		gameObject = text.gameObject;
+		TMP_Text tmp = Create<GameObject>("Assets/Resources/Blocks/Text.prefab").GetComponent<TMP_Text>();
+		gameObject = tmp.gameObject;
 
-		text.text = Convert.ToString(block.Properties["Text"]);
-		text.rectTransform.sizeDelta = JsonConvert.DeserializeObject<Vector2>(block.Properties["DisplaySize"].ToString());
+		string text = Convert.ToString(block.Properties["Text"]);
+		FontStyles fontStyle = ExtractFromRichText(text, out string sanitized);
+		
+		tmp.text = sanitized;
+		tmp.fontStyle = fontStyle;
+		tmp.rectTransform.sizeDelta = JsonConvert.DeserializeObject<Vector2>(block.Properties["DisplaySize"].ToString());
 
 		base.Decompile(ref gameObject, block, parent);
+	}
+
+	private static FontStyles ExtractFromRichText(string text, out string sanitized)
+	{
+		FontStyles styles = FontStyles.Normal;
+		
+		if (string.IsNullOrEmpty(text))
+		{
+			sanitized = string.Empty;
+			return styles;
+		}
+
+		if (text.Contains("<b>"))
+			styles |= FontStyles.Bold;
+
+		if (text.Contains("<i>"))
+			styles |= FontStyles.Italic;
+
+		if (text.Contains("<u>"))
+			styles |= FontStyles.Underline;
+
+		if (text.Contains("<s>"))
+			styles |= FontStyles.Strikethrough;
+		
+		sanitized = Regex.Replace(text, @"<\/?(b|i|u|s)>", string.Empty);
+		return styles;
 	}
 }

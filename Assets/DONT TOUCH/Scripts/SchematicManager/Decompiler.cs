@@ -275,7 +275,7 @@ public static class Decompiler
             if (!_objectFromId[dict.Key].gameObject.TryGetComponent(out ScriptComponent script))
                 script = _objectFromId[dict.Key].gameObject.AddComponent<ScriptComponent>();
             
-            script.ScriptId = dict.Value.ScriptId;
+            script.ScriptName = dict.Value.ScriptName;
             foreach (KeyValuePair<string, string> property in dict.Value.Properties)
                 script.properties.Add(new ScriptProperty { Key = property.Key, Value = property.Value });
         }

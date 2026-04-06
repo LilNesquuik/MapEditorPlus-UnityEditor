@@ -10,6 +10,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Schematic : SchematicBlock
 {
+    public const string CompilerVersion = "1.0.0";
+    
     public override BlockType BlockType => BlockType.Schematic;
 
     public void CompileSchematic()

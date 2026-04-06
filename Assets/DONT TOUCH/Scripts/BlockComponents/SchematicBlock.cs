@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public abstract class SchematicBlock : MonoBehaviour
 {
     public abstract BlockType BlockType { get; }
@@ -56,7 +57,7 @@ public abstract class SchematicBlock : MonoBehaviour
 
         t.SetParent(parent);
         t.localPosition = block.Position;
-        t.localEulerAngles = block.Rotation != null ? block.Rotation : Vector3.zero;
+        t.localEulerAngles = block.Rotation ?? Vector3.zero;
         t.localScale = block.Scale != null ? block.Scale == Vector3.zero ? Vector3.one : block.Scale : Vector3.one;
 
         gameObject.isStatic = block.Properties != null && block.Properties.TryGetValue("Static", out object isStatic) && Convert.ToBoolean(isStatic);

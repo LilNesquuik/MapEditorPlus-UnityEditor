@@ -3,7 +3,7 @@ using System.Linq;
 
 public class SerializableScript
 {
-    public int ScriptId { get; set; }
+    public string ScriptName { get; set; }
     public Dictionary<string, string> Properties { get; set; }
     
     public SerializableScript()
@@ -12,7 +12,7 @@ public class SerializableScript
 
     public SerializableScript(ScriptComponent scriptComponent)
     {
-        ScriptId = scriptComponent.ScriptId;
+        ScriptName = scriptComponent.ScriptName;
         Properties = scriptComponent.Properties.ToDictionary(x => x.Key, x => x.Value);
     }
 }

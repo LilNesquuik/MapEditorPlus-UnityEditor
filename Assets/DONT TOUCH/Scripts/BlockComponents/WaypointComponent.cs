@@ -8,7 +8,10 @@ public class WaypointComponent : SchematicBlock
     public override BlockType BlockType => BlockType.Waypoint;
 
     public Vector3 Bounds = Vector3.one;
-    public float Priority = byte.MaxValue;
+    
+    [Tooltip("The priority of the waypoint. If this waypoint are inside bounds of another waypoint with a higher priority, this waypoint will not be used.")]
+    [Range(byte.MinValue, byte.MaxValue)]
+    public byte Priority = byte.MaxValue;
     
     private Transform _child;
     
@@ -27,7 +30,7 @@ public class WaypointComponent : SchematicBlock
     {
         WaypointComponent waypoint = Create<WaypointComponent>("Assets/Resources/Blocks/Waypoint.prefab");
         waypoint.Bounds = block.Properties["Bounds"] as SerializableVector;
-        waypoint.Priority = Convert.ToSingle(block.Properties["Priority"]);
+        waypoint.Priority = Convert.ToByte(block.Properties["Priority"]);
         
         base.Decompile(ref gameObject, block, parent);
     }
