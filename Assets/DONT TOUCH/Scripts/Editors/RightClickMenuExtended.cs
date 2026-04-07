@@ -12,13 +12,9 @@ public class RightClickMenuExtended
 			parent = menuCommand.context as GameObject;
 
 		if (parent == null)
-		{
 			CreateBlock(menuCommand, "Assets/Resources/Blocks/Schematic.prefab");
-		}
 		else
-		{
 			CreateBlock(menuCommand, "Assets/Resources/Blocks/Empty.prefab");
-		}
 	}
 
 	#region Primitives
@@ -52,9 +48,6 @@ public class RightClickMenuExtended
 
 	[MenuItem("GameObject/🛠️ MER Blocks/Lights/Spot", false, -1)]
 	private static void CreateSpotLight(MenuCommand menuCommand) => CreateLight(menuCommand, LightType.Spot);
-
-	[MenuItem("GameObject/🛠️ MER Blocks/Lights/Area", false, -1)]
-	private static void CreateAreaLight(MenuCommand menuCommand) => CreateLight(menuCommand, LightType.Area);
 
 	private static void CreateLight(MenuCommand menuCommand, LightType lightType) => CreateBlock(menuCommand, $"Assets/Resources/Blocks/Lights/{lightType} Light.prefab");
 	#endregion

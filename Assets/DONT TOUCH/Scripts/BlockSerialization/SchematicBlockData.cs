@@ -18,4 +18,6 @@ public class SchematicBlockData
     public virtual BlockType BlockType { get; set; }
 
     public virtual Dictionary<string, object> Properties { get; set; }
+    
+    public override string ToString() => $"SchematicBlockData: {ObjectId} - {Name} - {BlockType}";
 }
